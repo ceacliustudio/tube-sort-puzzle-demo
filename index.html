@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<title>Tube Sort Puzzle</title>
+<style>
+html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; background: #0b1024; touch-action: none; }
+#game { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; }
+#unity-canvas { display: block; height: 100%; aspect-ratio: 9 / 16; max-width: 100%; background: #0b1024; outline: none; }
+#loading { position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  color: #fff; font: 600 18px system-ui, sans-serif; gap: 16px; background: #0b1024; }
+#bar { width: 220px; height: 10px; border-radius: 5px; background: rgba(255,255,255,.15); overflow: hidden; }
+#fill { width: 0; height: 100%; background: #3d5afe; transition: width .2s; }
+</style>
+</head>
+<body>
+<div id="game"><canvas id="unity-canvas" tabindex="-1"></canvas></div>
+<div id="loading"><div>Tube Sort Puzzle</div><div id="bar"><div id="fill"></div></div></div>
+<script>
+  var canvas = document.getElementById("unity-canvas");
+  var config = {
+    dataUrl: "WebGL-compressed.data.unityweb",
+    frameworkUrl: "WebGL-compressed.framework.js.unityweb",
+    codeUrl: "WebGL-compressed.wasm.unityweb",
+    streamingAssetsUrl: "StreamingAssets",
+    companyName: "YourCompany",
+    productName: "Tube Sort Puzzle",
+    productVersion: "1.0",
+    matchWebGLToCanvasSize: true,
+    devicePixelRatio: Math.min(window.devicePixelRatio || 1, 2)
+  };
+  var script = document.createElement("script");
+  script.src = "WebGL-compressed.loader.js";
+  script.onload = function () {
+    createUnityInstance(canvas, config, function (p) {
+      document.getElementById("fill").style.width = (p * 100) + "%";
+    }).then(function () {
+      document.getElementById("loading").style.display = "none";
+      canvas.focus();
+    }).catch(function (message) { alert(message); });
+  };
+  document.body.appendChild(script);
+</script>
+</body>
+</html>
