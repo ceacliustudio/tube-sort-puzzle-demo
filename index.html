@@ -20,9 +20,9 @@ html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; background: 
 <script>
   var canvas = document.getElementById("unity-canvas");
   var config = {
-    dataUrl: "WebGL-compressed.data.unityweb",
-    frameworkUrl: "WebGL-compressed.framework.js.unityweb",
-    codeUrl: "WebGL-compressed.wasm.unityweb",
+    dataUrl: "WebGL.data",
+    frameworkUrl: "WebGL.framework.js",
+    codeUrl: "WebGL.wasm",
     streamingAssetsUrl: "StreamingAssets",
     companyName: "YourCompany",
     productName: "Tube Sort Puzzle",
@@ -31,14 +31,18 @@ html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; background: 
     devicePixelRatio: Math.min(window.devicePixelRatio || 1, 2)
   };
   var script = document.createElement("script");
-  script.src = "WebGL-compressed.loader.js";
+  script.src = "WebGL.loader.js";
   script.onload = function () {
     createUnityInstance(canvas, config, function (p) {
       document.getElementById("fill").style.width = (p * 100) + "%";
     }).then(function () {
       document.getElementById("loading").style.display = "none";
       canvas.focus();
-    }).catch(function (message) { alert(message); });
+    }).catch(function (message) {
+      var l = document.getElementById("loading");
+      l.innerHTML = "<div>This browser could not start the game.</div><div style=\"font-weight:400;font-size:15px;max-width:420px;text-align:center;opacity:.8\">Please open the demo in the latest Chrome, Edge, Firefox or Safari (WebGL 2 is required).</div>";
+      console.error(message);
+    });
   };
   document.body.appendChild(script);
 </script>
